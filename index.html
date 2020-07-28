@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <script crossorigin src="https://unpkg.com/react@16/umd/react.development.js"></script>
+    <script crossorigin src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script>
+      'use strict';
+
+      // React component
+      class App extends React.Component {
+        state = {
+          count: 0,
+          step: 1,
+        };
+
+        increment = () => {
+          const { count, step } = this.state;
+          const newState = {
+            ...this.state,
+            count: count + step,
+          };
+          this.setState(newState);
+        };
+
+        decrement = () => {
+          const { count, step } = this.state;
+          const newState = {
+            ...this.state,
+            count: count - step,
+          };
+          this.setState(newState);
+        };
+
+        onChangeHandler = ({ target: { value } }) => {
+          // const newState = Object.assign({}, this.state, { step: Number(value) });
+
+          this.setState({ step: Number(value) });
+        };
+
+        render() {
+          const { count, step } = this.state;
+
+          const valueElem = React.createElement('h1', null, `${this.props.title} ${count}`);
+          const stepInput = React.createElement('input', {
+            type: 'number',
+            value: step,
+            onChange: this.onChangeHandler,
+          });
+          const incrementBtn = React.createElement('button', { onClick: this.increment }, '+');
+          const decrementBtn = React.createElement('button', { onClick: this.decrement }, '-');
+
+          return React.createElement('div', null, valueElem, stepInput, decrementBtn, incrementBtn);
+        }
+      }
+
+      const app = React.createElement(App, {
+        title: 'TITLE FROM PROPS',
+      }); // React element
+      const rootElem = document.getElementById('root'); // DOM element
+
+      ReactDOM.render(app, rootElem); // render React element on HTML page
+    </script>
+  </body>
+</html>
